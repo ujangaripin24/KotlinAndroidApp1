@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.dp
 import com.example.kotlinandroidapp1.R
 
 @Composable
-fun OnboardingScreen(onContinue: () -> Unit) {
+fun OnboardingScreen(
+    onLoginClick: () -> Unit,
+    onHomeClick: () -> Unit
+) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -34,8 +37,11 @@ fun OnboardingScreen(onContinue: () -> Unit) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(text = "Selamat Datang Di Aplikasi Saya!")
         Spacer(modifier = Modifier.height(32.dp))
-        Button (onClick = onContinue) {
+        Button (onClick = onLoginClick) {
             Text(text = "Continue")
+        }
+        Button (onClick = onHomeClick) {
+            Text(text = "Skip")
         }
     }
 }
