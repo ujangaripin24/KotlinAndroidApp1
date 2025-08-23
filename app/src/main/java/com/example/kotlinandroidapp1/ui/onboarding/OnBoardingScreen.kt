@@ -35,13 +35,11 @@ fun OnboardingScreen(
             modifier = Modifier.padding(bottom = 24.dp)
         )
         Spacer(modifier = Modifier.height(32.dp))
-        Text(text = "Selamat Datang Di Aplikasi Saya!")
+        Text(text = "Selamat Datang!")
+        Text(text = "Anda siap menjelajah dunia dengan peta?")
         Spacer(modifier = Modifier.height(32.dp))
         Button (onClick = onLoginClick) {
             Text(text = "Continue")
-        }
-        Button (onClick = onHomeClick) {
-            Text(text = "Skip")
         }
     }
 }
