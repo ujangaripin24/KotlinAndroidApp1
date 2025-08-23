@@ -21,7 +21,7 @@ fun ProfileDetailPage(onBackClick: () -> Unit) {
     Scaffold (
         topBar = {
             SmallTopAppBar(
-                title = { Text("Profile Detail") },
+                title = { Text("Profile Detail!") },
                 navigationIcon = {
                     IconButton (onClick = onBackClick) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
