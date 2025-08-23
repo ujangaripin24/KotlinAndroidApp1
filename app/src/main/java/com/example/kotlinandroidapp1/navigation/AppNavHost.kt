@@ -17,14 +17,15 @@ fun AppNavHost(navController: NavHostController) {
         composable("onboarding") {
             OnboardingScreen(
                 onLoginClick = { navController.navigate("login_screen") },
-                onHomeClick = { navController.navigate("home_screen") }
             )
         }
         composable("home_screen") {
             HomeScreen()
         }
         composable("login_screen") {
-            LoginScreen()
+            LoginScreen(
+                onHomeClick = { navController.navigate("home_screen") }
+            )
         }
     }
 }

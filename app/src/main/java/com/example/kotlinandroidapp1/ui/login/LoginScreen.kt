@@ -70,9 +70,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit,
-    onSignUpClick: () -> Unit,
-    onForgotPassword: () -> Unit
+    onHomeClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -101,7 +99,7 @@ fun LoginScreen(
         if (shouldNavigate) {
             delay(2000) // Simulate loading time
             isLoading = false
-            onLoginSuccess()
+            onHomeClick()
         }
     }
 
@@ -171,18 +169,11 @@ fun LoginScreen(
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF2D3748)
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = "Masuk untuk melanjutkan petualangan Anda",
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            color = Color(0xFF718096)
                         ),
                         textAlign = TextAlign.Center
                     )
+
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Spacer(modifier = Modifier.height(32.dp))
 
@@ -284,7 +275,7 @@ fun LoginScreen(
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
-                            ) { onForgotPassword() },
+                            ) {  },
                         fontWeight = FontWeight.Medium
                     )
 
@@ -391,7 +382,7 @@ fun LoginScreen(
                             modifier = Modifier.clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
-                            ) { onSignUpClick() }
+                            ) {  }
                         )
                     }
                 }
