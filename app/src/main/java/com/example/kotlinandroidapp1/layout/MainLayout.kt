@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,28 +21,27 @@ import com.example.kotlinandroidapp1.ui.profile.ProfilePage
 @Composable
 fun MainLayout() {
     val navController = rememberNavController()
-    val items = listOf("dashboard", "profile", "product")
+    val items = listOf(
+        BottomNavScreen.Dashboard,
+        BottomNavScreen.Profile
+    )
 
     Scaffold(
         bottomBar = {
             NavigationBar {
+                val currentRoute = navController.currentBackStackEntry?.destination?.route
                 items.forEach { screen ->
                     NavigationBarItem(
-                        selected = navController.currentDestination?.route == screen,
+                        selected = currentRoute == screen.route,
                         onClick = {
-                            navController.navigate(screen) {
-                                popUpTo("dashboard") { saveState = true }
+                            navController.navigate(screen.route) {
+                                popUpTo(BottomNavScreen.Dashboard.route) { saveState = true }
                                 launchSingleTop = true
                                 restoreState = true
                             }
                         },
-                        icon = {
-                            when (screen) {
-                                "dashboard_page" -> Icon(Icons.Default.Home, contentDescription = null)
-                                "profile_page" -> Icon(Icons.Default.Person, contentDescription = null)
-                            }
-                        },
-                        label = { Text(screen) }
+                        icon = { Icon(screen.icon, contentDescription = screen.label) },
+                        label = { Text(screen.label) }
                     )
                 }
             }
@@ -50,11 +49,16 @@ fun MainLayout() {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = "dashboard",
+            startDestination = BottomNavScreen.Dashboard.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("dashboard_page") { DashboardPage() }
-            composable("profile_page") { ProfilePage() }
+            composable(BottomNavScreen.Dashboard.route) { DashboardPage() }
+            composable(BottomNavScreen.Profile.route) { ProfilePage() }
         }
     }
+}
+
+sealed class BottomNavScreen(val route: String, val label: String, val icon: ImageVector) {
+    object Dashboard : BottomNavScreen("dashboard_page", "Dashboard", Icons.Default.Home)
+    object Profile : BottomNavScreen("profile_page", "Profile", Icons.Default.Person)
 }

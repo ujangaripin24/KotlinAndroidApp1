@@ -94,7 +94,6 @@ fun LoginScreen(
         )
     }
 
-    // Handle navigation after successful login
     LaunchedEffect(shouldNavigate) {
         if (shouldNavigate) {
             delay(2000) // Simulate loading time
