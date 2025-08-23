@@ -96,7 +96,7 @@ fun LoginScreen(
 
     LaunchedEffect(shouldNavigate) {
         if (shouldNavigate) {
-            delay(2000) // Simulate loading time
+            delay(2000)
             isLoading = false
             onMainLayoutClick()
         }
@@ -286,7 +286,7 @@ fun LoginScreen(
                                 errorMessage = "Email dan password harus diisi"
                             } else {
                                 isLoading = true
-                                shouldNavigate = true // Trigger navigation
+                                shouldNavigate = true
                             }
                         },
                         modifier = Modifier

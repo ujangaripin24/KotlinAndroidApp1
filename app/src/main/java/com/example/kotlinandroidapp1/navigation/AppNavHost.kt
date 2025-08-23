@@ -8,6 +8,7 @@ import com.example.kotlinandroidapp1.layout.MainLayout
 import com.example.kotlinandroidapp1.ui.home.HomeScreen
 import com.example.kotlinandroidapp1.ui.login.LoginScreen
 import com.example.kotlinandroidapp1.ui.onboarding.OnboardingScreen
+import com.example.kotlinandroidapp1.ui.profile.ProfileDetailPage
 
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -17,11 +18,8 @@ fun AppNavHost(navController: NavHostController) {
     ) {
         composable("onboarding") {
             OnboardingScreen(
-                onLoginClick = { navController.navigate("login_screen") },
+                onLoginClick = { navController.navigate("login_screen") }
             )
-        }
-        composable("home_screen") {
-            HomeScreen()
         }
         composable("login_screen") {
             LoginScreen(
@@ -29,7 +27,12 @@ fun AppNavHost(navController: NavHostController) {
             )
         }
         composable("main_layout") {
-            MainLayout()
+            MainLayout(parentNavController = navController)
+        }
+        composable("profile_detail_screen") {
+            ProfileDetailPage(
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }

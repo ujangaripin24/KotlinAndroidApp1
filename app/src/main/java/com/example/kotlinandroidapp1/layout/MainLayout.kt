@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,8 +20,8 @@ import com.example.kotlinandroidapp1.ui.dashboard.DashboardPage
 import com.example.kotlinandroidapp1.ui.profile.ProfilePage
 
 @Composable
-fun MainLayout() {
-    val navController = rememberNavController()
+fun MainLayout(parentNavController: NavHostController) {
+    val childNavController = rememberNavController()
     val items = listOf(
         BottomNavScreen.Dashboard,
         BottomNavScreen.Profile
@@ -29,12 +30,12 @@ fun MainLayout() {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                val currentRoute = navController.currentBackStackEntry?.destination?.route
+                val currentRoute = childNavController.currentBackStackEntry?.destination?.route
                 items.forEach { screen ->
                     NavigationBarItem(
                         selected = currentRoute == screen.route,
                         onClick = {
-                            navController.navigate(screen.route) {
+                            childNavController.navigate(screen.route) {
                                 popUpTo(BottomNavScreen.Dashboard.route) { saveState = true }
                                 launchSingleTop = true
                                 restoreState = true
@@ -48,15 +49,22 @@ fun MainLayout() {
         }
     ) { innerPadding ->
         NavHost(
-            navController,
+            childNavController,
             startDestination = BottomNavScreen.Dashboard.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavScreen.Dashboard.route) { DashboardPage() }
-            composable(BottomNavScreen.Profile.route) { ProfilePage() }
+            composable(BottomNavScreen.Profile.route) {
+                ProfilePage(
+                    onMainProfileDetail = {
+                        parentNavController.navigate("profile_detail_screen")
+                    }
+                )
+            }
         }
     }
 }
+
 
 sealed class BottomNavScreen(val route: String, val label: String, val icon: ImageVector) {
     object Dashboard : BottomNavScreen("dashboard_page", "Dashboard", Icons.Default.Home)
