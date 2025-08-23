@@ -2,6 +2,7 @@ package com.example.kotlinandroidapp1.layout
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -17,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlinandroidapp1.ui.dashboard.DashboardPage
+import com.example.kotlinandroidapp1.ui.map.MapPage
 import com.example.kotlinandroidapp1.ui.profile.ProfilePage
 
 @Composable
@@ -24,6 +26,7 @@ fun MainLayout(parentNavController: NavHostController) {
     val childNavController = rememberNavController()
     val items = listOf(
         BottomNavScreen.Dashboard,
+        BottomNavScreen.Map,
         BottomNavScreen.Profile
     )
 
@@ -54,6 +57,7 @@ fun MainLayout(parentNavController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavScreen.Dashboard.route) { DashboardPage() }
+            composable(BottomNavScreen.Map.route) { MapPage() }
             composable(BottomNavScreen.Profile.route) {
                 ProfilePage(
                     onMainProfileDetail = {
@@ -68,5 +72,6 @@ fun MainLayout(parentNavController: NavHostController) {
 
 sealed class BottomNavScreen(val route: String, val label: String, val icon: ImageVector) {
     object Dashboard : BottomNavScreen("dashboard_page", "Dashboard", Icons.Default.Home)
+    object Map : BottomNavScreen("map_page", "Map", Icons.Default.Email)
     object Profile : BottomNavScreen("profile_page", "Profile", Icons.Default.Person)
 }
