@@ -70,7 +70,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun LoginScreen(
-    onHomeClick: () -> Unit
+    onMainLayoutClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -99,7 +99,7 @@ fun LoginScreen(
         if (shouldNavigate) {
             delay(2000) // Simulate loading time
             isLoading = false
-            onHomeClick()
+            onMainLayoutClick()
         }
     }
 

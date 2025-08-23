@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.kotlinandroidapp1.layout.MainLayout
 import com.example.kotlinandroidapp1.ui.home.HomeScreen
 import com.example.kotlinandroidapp1.ui.login.LoginScreen
 import com.example.kotlinandroidapp1.ui.onboarding.OnboardingScreen
@@ -24,8 +25,11 @@ fun AppNavHost(navController: NavHostController) {
         }
         composable("login_screen") {
             LoginScreen(
-                onHomeClick = { navController.navigate("home_screen") }
+                onMainLayoutClick = { navController.navigate("main_layout") }
             )
+        }
+        composable("main_layout") {
+            MainLayout()
         }
     }
 }
