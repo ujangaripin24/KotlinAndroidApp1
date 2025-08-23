@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import com.example.kotlinandroidapp1.R
 import kotlinx.coroutines.launch
 
-// Data class untuk halaman onboarding
 data class OnboardingPage(
     val image: Int,
     val title: String,
@@ -54,7 +52,6 @@ data class OnboardingPage(
     val gradientColors: List<Color>
 )
 
-// Daftar halaman onboarding
 val onboardingPages = listOf(
     OnboardingPage(
         image = R.drawable.ic_onboarding_1,
