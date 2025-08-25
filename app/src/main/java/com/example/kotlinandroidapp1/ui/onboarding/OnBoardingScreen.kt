@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlinandroidapp1.R
+import com.example.kotlinandroidapp1.data.UserPreferences
 import kotlinx.coroutines.launch
 
 data class OnboardingPage(
@@ -77,9 +78,11 @@ val onboardingPages = listOf(
 @Composable
 fun OnboardingScreen(
     onLoginClick: () -> Unit,
+    userPreferences: UserPreferences
 ) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
     val coroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
     
     Box(
         modifier = Modifier.fillMaxSize()
@@ -121,7 +124,12 @@ fun OnboardingScreen(
                 exit = fadeOut(animationSpec = tween(durationMillis = 500))
             ) {
                 Button(
-                    onClick = onLoginClick,
+                    onClick = {
+                        scope.launch {
+                            userPreferences.setOnboardingCompleted(true)
+                            onLoginClick
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
