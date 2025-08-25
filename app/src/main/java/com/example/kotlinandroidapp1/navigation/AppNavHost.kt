@@ -17,7 +17,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
     val onboardingCompleted = userPreferences.onboardingCompleted.collectAsState(initial = false)
     NavHost(
         navController = navController,
-        startDestination = if (onboardingCompleted.value) "main_layout" else "onboarding"
+        startDestination = if (onboardingCompleted.value) "login_screen" else "onboarding"
     ) {
         composable("onboarding") {
             OnboardingScreen(

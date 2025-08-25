@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.navigation.compose.rememberNavController
+import com.example.kotlinandroidapp1.data.UserPreferences
 import com.example.kotlinandroidapp1.navigation.AppNavHost
 import com.example.kotlinandroidapp1.ui.theme.KotlinAndroidApp1Theme
 import com.mapbox.common.MapboxOptions
@@ -17,11 +18,13 @@ class MainActivity : ComponentActivity() {
         // token mapbox
         val token = getString(R.string.mapbox_access_token)
         MapboxOptions.accessToken = token
+        // data local for onboarding
+        val userPreferences = UserPreferences(this)
         setContent {
             KotlinAndroidApp1Theme {
                 Surface (color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
-                    AppNavHost(navController = navController)
+                    AppNavHost(navController = navController, userPreferences = userPreferences)
                 }
             }
         }
