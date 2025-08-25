@@ -13,13 +13,13 @@ import com.mapbox.common.MapboxOptions
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         // token mapbox
         val token = getString(R.string.mapbox_access_token)
         MapboxOptions.accessToken = token
         // data local for onboarding
         val userPreferences = UserPreferences(this)
+
+        super.onCreate(savedInstanceState)
         setContent {
             KotlinAndroidApp1Theme {
                 Surface (color = MaterialTheme.colorScheme.background) {

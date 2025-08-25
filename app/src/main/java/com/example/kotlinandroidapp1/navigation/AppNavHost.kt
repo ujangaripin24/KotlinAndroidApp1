@@ -21,34 +21,15 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
         null -> {
             SplashScreen()
         }
-        true -> {
-            NavHost(
-                navController = navController,
-                startDestination = "login_screen"
-            ) {
-                composable("onboarding") {
-                    OnboardingScreen(
-                        onLoginClick = { navController.navigate("login_screen") },
-                        userPreferences = userPreferences
-                    )
-                }
-                composable("login_screen") {
-                    LoginScreen(
-                        onMainLayoutClick = { navController.navigate("main_layout") }
-                    )
-                }
-                composable("main_layout") {
-                    MainLayout(parentNavController = navController)
-                }
-                composable("profile_detail_screen") {
-                    ProfileDetailPage(onBackClick = { navController.popBackStack() })
-                }
+        else -> {
+            val startDestination = if (onboardingCompleted) {
+                "login_screen"
+            } else {
+                "onboarding"
             }
-        }
-        false -> {
             NavHost(
                 navController = navController,
-                startDestination = "onboarding"
+                startDestination = startDestination
             ) {
                 composable("onboarding") {
                     OnboardingScreen(
@@ -56,6 +37,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                         userPreferences = userPreferences
                     )
                 }
+
                 composable("login_screen") {
                     LoginScreen(
                         onMainLayoutClick = { navController.navigate("main_layout") }
