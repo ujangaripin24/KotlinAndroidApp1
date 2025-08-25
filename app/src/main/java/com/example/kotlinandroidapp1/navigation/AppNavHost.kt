@@ -11,32 +11,69 @@ import com.example.kotlinandroidapp1.ui.home.HomeScreen
 import com.example.kotlinandroidapp1.ui.login.LoginScreen
 import com.example.kotlinandroidapp1.ui.onboarding.OnboardingScreen
 import com.example.kotlinandroidapp1.ui.profile.ProfileDetailPage
+import com.example.kotlinandroidapp1.ui.splash_screen.SplashScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController, userPreferences: UserPreferences) {
     val onboardingCompleted = userPreferences.onboardingCompleted.collectAsState(initial = false)
-    NavHost(
-        navController = navController,
-        startDestination = if (onboardingCompleted.value) "login_screen" else "onboarding"
-    ) {
-        composable("onboarding") {
-            OnboardingScreen(
-                onLoginClick = { navController.navigate("login_screen") },
-                userPreferences = userPreferences
-            )
+
+    when(val onboardingCompleted = onboardingCompleted.value){
+        null -> {
+            SplashScreen()
         }
-        composable("login_screen") {
-            LoginScreen(
-                onMainLayoutClick = { navController.navigate("main_layout") }
-            )
+        true -> {
+            NavHost(
+                navController = navController,
+                startDestination = "login_screen"
+            ) {
+                composable("onboarding") {
+                    OnboardingScreen(
+                        onLoginClick = { navController.navigate("login_screen") },
+                        userPreferences = userPreferences
+                    )
+                }
+                composable("login_screen") {
+                    LoginScreen(
+                        onMainLayoutClick = { navController.navigate("main_layout") }
+                    )
+                }
+                composable("main_layout") {
+                    MainLayout(parentNavController = navController)
+                }
+                composable("profile_detail_screen") {
+                    ProfileDetailPage(
+                        onBackClick = { navController.popBackStack() }
+                    )
+                }
+            }
         }
-        composable("main_layout") {
-            MainLayout(parentNavController = navController)
-        }
-        composable("profile_detail_screen") {
-            ProfileDetailPage(
-                onBackClick = { navController.popBackStack() }
-            )
+        false -> {
+            NavHost(
+                navController = navController,
+                startDestination = "onboarding"
+            ) {
+                composable("onboarding") {
+                    OnboardingScreen(
+                        onLoginClick = { navController.navigate("login_screen") },
+                        userPreferences = userPreferences
+                    )
+                }
+                composable("login_screen") {
+                    LoginScreen(
+                        onMainLayoutClick = { navController.navigate("main_layout") }
+                    )
+                }
+                composable("main_layout") {
+                    MainLayout(parentNavController = navController)
+                }
+                composable("profile_detail_screen") {
+                    ProfileDetailPage(
+                        onBackClick = { navController.popBackStack() }
+                    )
+                }
+            }
         }
     }
+
+
 }
