@@ -15,9 +15,9 @@ import com.example.kotlinandroidapp1.ui.splash_screen.SplashScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController, userPreferences: UserPreferences) {
-    val onboardingCompleted = userPreferences.onboardingCompleted.collectAsState(initial = false)
+    val onboardingCompletedFlow = userPreferences.onboardingCompleted.collectAsState(initial = null)
 
-    when(val onboardingCompleted = onboardingCompleted.value){
+    when (val onboardingCompleted = onboardingCompletedFlow.value) {
         null -> {
             SplashScreen()
         }
@@ -41,9 +41,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                     MainLayout(parentNavController = navController)
                 }
                 composable("profile_detail_screen") {
-                    ProfileDetailPage(
-                        onBackClick = { navController.popBackStack() }
-                    )
+                    ProfileDetailPage(onBackClick = { navController.popBackStack() })
                 }
             }
         }
@@ -67,13 +65,9 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                     MainLayout(parentNavController = navController)
                 }
                 composable("profile_detail_screen") {
-                    ProfileDetailPage(
-                        onBackClick = { navController.popBackStack() }
-                    )
+                    ProfileDetailPage(onBackClick = { navController.popBackStack() })
                 }
             }
         }
     }
-
-
 }
