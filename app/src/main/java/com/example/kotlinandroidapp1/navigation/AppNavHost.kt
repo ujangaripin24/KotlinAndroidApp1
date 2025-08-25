@@ -19,7 +19,20 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
 
     when (val onboardingCompleted = onboardingCompletedFlow.value) {
         null -> {
-            SplashScreen()
+            SplashScreen(
+                userPreferences = userPreferences,
+                onFinished = { completed ->
+                    if (completed) {
+                        navController.navigate("login_screen") {
+                            popUpTo(0)
+                        }
+                    } else {
+                        navController.navigate("onboarding") {
+                            popUpTo(0)
+                        }
+                    }
+                }
+            )
         }
         else -> {
             val startDestination = if (onboardingCompleted) {
