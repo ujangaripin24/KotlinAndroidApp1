@@ -45,7 +45,9 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                 }
                 composable("onboarding") {
                     OnboardingScreen(
-                        onLoginClick = { navController.navigate("login_screen") },
+                        onLoginClick = { navController.navigate("login_screen") {
+                            popUpTo("onboarding") {inclusive = true}
+                        }},
                         userPreferences = userPreferences
                     )
                 }

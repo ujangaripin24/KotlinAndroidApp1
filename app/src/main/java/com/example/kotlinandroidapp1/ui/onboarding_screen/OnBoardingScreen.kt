@@ -127,7 +127,7 @@ fun OnboardingScreen(
                     onClick = {
                         scope.launch {
                             userPreferences.setOnboardingCompleted(true)
-                            onLoginClick
+                            onLoginClick()
                         }
                     },
                     modifier = Modifier
