@@ -15,5 +15,6 @@ fun DashboardPage() {
 
     ) {
         Text(text = "Dashboard Screen")
+        Text(text = "Dashboard Part 2")
     }
 }
