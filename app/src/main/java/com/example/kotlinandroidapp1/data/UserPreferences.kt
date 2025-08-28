@@ -29,7 +29,7 @@ class UserPreferences(private val context: Context) {
         }
     }
 
-    suspend fun setTermPolicyCompleted(completed: Boolean) {
+    suspend fun setTermAndPolicyCompleted(completed: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[UserPreferencesKeys.TERMANDPOLICY] = completed
         }

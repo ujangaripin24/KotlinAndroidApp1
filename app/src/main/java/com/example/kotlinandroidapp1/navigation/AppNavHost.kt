@@ -15,9 +15,9 @@ import com.example.kotlinandroidapp1.ui.term_policy_screen.TermPolicyScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController, userPreferences: UserPreferences) {
-    val onboardingCompletedFlow = userPreferences.onboardingCompleted.collectAsState(initial = null)
+    val termandpolicyCompletedFlow = userPreferences.onboardingCompleted.collectAsState(initial = null)
 
-    when (val onboardingCompleted = onboardingCompletedFlow.value) {
+    when (val termandpolicyCompletedFlow = termandpolicyCompletedFlow.value) {
         null -> {
             SplashScreen(
                 userPreferences = userPreferences,
@@ -35,7 +35,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
             )
         }
         else -> {
-            val startDestination = if (onboardingCompleted) {
+            val startDestination = if (termandpolicyCompletedFlow) {
                 "login_screen"
             } else {
                 "term_and_policy"
@@ -46,7 +46,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
             ) {
                 composable("term_and_policy") {
                     TermPolicyScreen(
-                        onBoardingClick = {navController.navigate("onboarding")},
+                        onBoardingClick = { navController.navigate("onboarding") },
                         userPreferences = userPreferences
                     )
                 }
