@@ -59,7 +59,10 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
 
                 composable("login_screen") {
                     LoginScreen(
-                        onMainLayoutClick = { navController.navigate("main_layout") }
+                        onMainLayoutClick = { navController.navigate("main_layout") {
+                            popUpTo("login_screen") {inclusive = true}
+                            launchSingleTop = true
+                        } }
                     )
                 }
                 composable("main_layout") {

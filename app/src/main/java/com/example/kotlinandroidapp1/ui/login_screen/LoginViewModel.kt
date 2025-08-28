@@ -1,10 +1,10 @@
 package com.example.kotlinandroidapp1.ui.login_screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinandroidapp1.data.remote.model.LoginResponse
 import com.example.kotlinandroidapp1.data.repository.AuthRepository
-import com.mapbox.base.common.logger.model.Message
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +16,8 @@ sealed class LoginUiState {
     data class Error(val message: String) : LoginUiState()
 }
 
-class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
+class LoginViewModel(private val repository: AuthRepository) : ViewModel(),
+    ViewModelProvider.Factory {
     private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
     val uiState: StateFlow<LoginUiState> = _uiState
 

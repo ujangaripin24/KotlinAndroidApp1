@@ -44,6 +44,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,20 +66,24 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kotlinandroidapp1.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun LoginScreen(
-    onMainLayoutClick: () -> Unit
+    onMainLayoutClick: () -> Unit,
+    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel (
+        factory = LoginViewModelFactory (LocalContext.current)
+    )
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
-    var shouldNavigate by remember { mutableStateOf(false) }
 
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
@@ -92,14 +98,6 @@ fun LoginScreen(
                 stiffness = Spring.StiffnessLow
             )
         )
-    }
-
-    LaunchedEffect(shouldNavigate) {
-        if (shouldNavigate) {
-            delay(2000)
-            isLoading = false
-            onMainLayoutClick()
-        }
     }
 
     val gradientColors = listOf(
@@ -178,10 +176,7 @@ fun LoginScreen(
 
                     OutlinedTextField(
                         value = email,
-                        onValueChange = {
-                            email = it
-                            errorMessage = ""
-                        },
+                        onValueChange = {email = it},
                         label = {
                             Text(
                                 text = "Email",
@@ -205,10 +200,7 @@ fun LoginScreen(
 
                     OutlinedTextField(
                         value = password,
-                        onValueChange = {
-                            password = it
-                            errorMessage = ""
-                        },
+                        onValueChange = { password = it },
                         label = {
                             Text(
                                 text = "Password",
@@ -281,14 +273,7 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(32.dp))
 
                     Button(
-                        onClick = {
-                            if (email.isBlank() || password.isBlank()) {
-                                errorMessage = "Email dan password harus diisi"
-                            } else {
-                                isLoading = true
-                                shouldNavigate = true
-                            }
-                        },
+                        onClick = { viewModel.login(email, password) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp)
@@ -300,18 +285,21 @@ fun LoginScreen(
                         ),
                         enabled = !isLoading
                     ) {
-                        if (isLoading) {
-                            CircularProgressIndicator(
-                                color = Color.White,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        } else {
-                            Text(
-                                text = "Masuk",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
+                        Text("Masuk")
+                    }
+                    when(uiState) {
+                        is LoginUiState.Loading -> CircularProgressIndicator()
+                        is LoginUiState.Success -> {
+                            Text("Login berhasil")
+                            LaunchedEffect(Unit) {
+                                onMainLayoutClick()
+                            }
                         }
+                        is LoginUiState.Error -> Text(
+                            text = (uiState as LoginUiState.Error).message,
+                            color = Color.Red
+                        )
+                        else -> {}
                     }
 
                     Spacer(modifier = Modifier.height(24.dp))

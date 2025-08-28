@@ -41,5 +41,6 @@ class UserPreferences(private val context: Context) {
 
     suspend fun saveToken(token: String) {
         context.dataStore.edit { prefs -> prefs[UserPreferencesKeys.TOKEN_KEY] = token }
+        println("[UserPreferences] save token key: " +token)
     }
 }
