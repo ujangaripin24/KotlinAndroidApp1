@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SplashScreen(
     userPreferences: UserPreferences,
-    onFinished: (Boolean) -> Unit
+    onFinished: (String?, Boolean) -> Unit
 ) {
     var isLoading by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
@@ -29,9 +29,10 @@ fun SplashScreen(
         scope.launch {
             delay(2000)
 
+            val token = userPreferences.accessToken.firstOrNull()
             val onboardingCompleted = userPreferences.onboardingCompleted.firstOrNull() ?: false
 
-            onFinished(onboardingCompleted)
+            onFinished(token, onboardingCompleted)
 
             isLoading = false
         }

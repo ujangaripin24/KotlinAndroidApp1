@@ -2,6 +2,8 @@ package com.example.kotlinandroidapp1.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,34 +17,25 @@ import com.example.kotlinandroidapp1.ui.term_policy_screen.TermPolicyScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController, userPreferences: UserPreferences) {
-    val termandpolicyCompletedFlow = userPreferences.onboardingCompleted.collectAsState(initial = null)
+    val splashDone = remember { mutableStateOf(false) }
+    val startDestination = remember { mutableStateOf("login_screen") }
 
-    when (val termandpolicyCompletedFlow = termandpolicyCompletedFlow.value) {
-        null -> {
-            SplashScreen(
-                userPreferences = userPreferences,
-                onFinished = { completed ->
-                    if (completed) {
-                        navController.navigate("login_screen") {
-                            popUpTo(0)
-                        }
-                    } else {
-                        navController.navigate("term_and_policy") {
-                            popUpTo(0)
-                        }
-                    }
+    if (!splashDone.value) {
+        SplashScreen(
+            userPreferences = userPreferences,
+            onFinished = { token, onboardingCompleted ->
+                startDestination.value = when {
+                    !onboardingCompleted -> "term_and_policy"
+                    token.isNullOrEmpty() -> "login_screen"
+                    else -> "main_layout"
                 }
-            )
-        }
-        else -> {
-            val startDestination = if (termandpolicyCompletedFlow) {
-                "login_screen"
-            } else {
-                "term_and_policy"
+                splashDone.value = true
             }
+        )
+    } else {
             NavHost(
                 navController = navController,
-                startDestination = startDestination
+                startDestination = startDestination.value
             ) {
                 composable("term_and_policy") {
                     TermPolicyScreen(
@@ -56,13 +49,14 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                         userPreferences = userPreferences
                     )
                 }
-
                 composable("login_screen") {
                     LoginScreen(
-                        onMainLayoutClick = { navController.navigate("main_layout") {
-                            popUpTo("login_screen") {inclusive = true}
-                            launchSingleTop = true
-                        } }
+                        onMainLayoutClick = {
+                            navController.navigate("main_layout") {
+                                popUpTo("login_screen") { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
                     )
                 }
                 composable("main_layout") {
@@ -73,5 +67,4 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                 }
             }
         }
-    }
 }
