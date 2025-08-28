@@ -164,7 +164,7 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        text = "Selamat Datang Kembali",
+                        text = "Selamat Datang",
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF2D3748)
