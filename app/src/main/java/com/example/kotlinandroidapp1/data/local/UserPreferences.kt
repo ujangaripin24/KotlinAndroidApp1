@@ -1,4 +1,4 @@
-package com.example.kotlinandroidapp1.data
+package com.example.kotlinandroidapp1.data.local
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

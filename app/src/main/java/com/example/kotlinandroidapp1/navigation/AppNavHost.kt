@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.kotlinandroidapp1.data.UserPreferences
+import com.example.kotlinandroidapp1.data.local.UserPreferences
 import com.example.kotlinandroidapp1.layout.MainLayout
 import com.example.kotlinandroidapp1.ui.login_screen.LoginScreen
 import com.example.kotlinandroidapp1.ui.onboarding_screen.OnboardingScreen

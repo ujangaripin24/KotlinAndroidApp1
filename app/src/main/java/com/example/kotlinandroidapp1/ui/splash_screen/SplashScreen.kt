@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.kotlinandroidapp1.R
-import com.example.kotlinandroidapp1.data.UserPreferences
+import com.example.kotlinandroidapp1.data.local.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch

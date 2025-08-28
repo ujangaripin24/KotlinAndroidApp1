@@ -65,8 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlinandroidapp1.R
-import com.example.kotlinandroidapp1.data.UserPreferences
-import kotlinx.coroutines.coroutineScope
+import com.example.kotlinandroidapp1.data.local.UserPreferences
 import kotlinx.coroutines.launch
 
 data class TermSection(
