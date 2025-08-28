@@ -7,11 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.kotlinandroidapp1.data.UserPreferences
 import com.example.kotlinandroidapp1.layout.MainLayout
-import com.example.kotlinandroidapp1.ui.home.HomeScreen
-import com.example.kotlinandroidapp1.ui.login.LoginScreen
-import com.example.kotlinandroidapp1.ui.onboarding.OnboardingScreen
-import com.example.kotlinandroidapp1.ui.profile.ProfileDetailPage
+import com.example.kotlinandroidapp1.ui.login_screen.LoginScreen
+import com.example.kotlinandroidapp1.ui.onboarding_screen.OnboardingScreen
+import com.example.kotlinandroidapp1.ui.profile_screen.ProfileDetailPage
 import com.example.kotlinandroidapp1.ui.splash_screen.SplashScreen
+import com.example.kotlinandroidapp1.ui.term_policy_screen.TermPolicyScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController, userPreferences: UserPreferences) {
@@ -27,7 +27,7 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
                             popUpTo(0)
                         }
                     } else {
-                        navController.navigate("onboarding") {
+                        navController.navigate("term_and_policy") {
                             popUpTo(0)
                         }
                     }
@@ -38,12 +38,18 @@ fun AppNavHost(navController: NavHostController, userPreferences: UserPreference
             val startDestination = if (onboardingCompleted) {
                 "login_screen"
             } else {
-                "onboarding"
+                "term_and_policy"
             }
             NavHost(
                 navController = navController,
                 startDestination = startDestination
             ) {
+                composable("term_and_policy") {
+                    TermPolicyScreen(
+                        onBoardingClick = {navController.navigate("onboarding")},
+                        userPreferences = userPreferences
+                    )
+                }
                 composable("onboarding") {
                     OnboardingScreen(
                         onLoginClick = { navController.navigate("login_screen") },

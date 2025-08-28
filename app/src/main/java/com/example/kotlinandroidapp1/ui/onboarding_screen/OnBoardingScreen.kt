@@ -1,4 +1,4 @@
-package com.example.kotlinandroidapp1.ui.onboarding
+package com.example.kotlinandroidapp1.ui.onboarding_screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring

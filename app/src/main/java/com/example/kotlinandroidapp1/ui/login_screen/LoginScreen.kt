@@ -1,4 +1,4 @@
-package com.example.kotlinandroidapp1.ui.login
+package com.example.kotlinandroidapp1.ui.login_screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

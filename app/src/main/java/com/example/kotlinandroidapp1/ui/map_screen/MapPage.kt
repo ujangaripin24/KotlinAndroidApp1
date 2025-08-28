@@ -1,4 +1,4 @@
-package com.example.kotlinandroidapp1.ui.map
+package com.example.kotlinandroidapp1.ui.map_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

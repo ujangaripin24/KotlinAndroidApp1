@@ -11,6 +11,7 @@ val Context.dataStore by preferencesDataStore("user_preferences")
 
 object UserPreferencesKeys {
     val ONBOARDING = booleanPreferencesKey("on_boarding")
+    var TERMANDPOLICY = booleanPreferencesKey("term_and_policy")
 }
 
 class UserPreferences(private val context: Context) {
@@ -18,9 +19,19 @@ class UserPreferences(private val context: Context) {
         prefs[UserPreferencesKeys.ONBOARDING] ?: false
     }
 
+    val termandpolicyCompleted: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[UserPreferencesKeys.TERMANDPOLICY] ?: false
+    }
+
     suspend fun setOnboardingCompleted(completed: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[UserPreferencesKeys.ONBOARDING] = completed
+        }
+    }
+
+    suspend fun setTermPolicyCompleted(completed: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferencesKeys.TERMANDPOLICY] = completed
         }
     }
 }

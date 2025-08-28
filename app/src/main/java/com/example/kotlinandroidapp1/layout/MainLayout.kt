@@ -17,9 +17,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.kotlinandroidapp1.ui.dashboard.DashboardPage
-import com.example.kotlinandroidapp1.ui.map.MapPage
-import com.example.kotlinandroidapp1.ui.profile.ProfilePage
+import com.example.kotlinandroidapp1.ui.dashboard_screen.DashboardPage
+import com.example.kotlinandroidapp1.ui.map_screen.MapPage
+import com.example.kotlinandroidapp1.ui.profile_screen.ProfilePage
 
 @Composable
 fun MainLayout(parentNavController: NavHostController) {

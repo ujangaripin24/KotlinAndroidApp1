@@ -1,4 +1,4 @@
-package com.example.kotlinandroidapp1.ui.profile
+package com.example.kotlinandroidapp1.ui.profile_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
